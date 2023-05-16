@@ -54,6 +54,9 @@
     <ClCompile Include="Turn.cpp">
       <Filter>資源檔</Filter>
     </ClCompile>
+    <ClCompile Include="ViewManager.cpp">
+      <Filter>資源檔</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -67,6 +70,15 @@
     </ClInclude>
     <ClInclude Include="Turn.h">
       <Filter>資源檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewManager.h">
+      <Filter>資源檔</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="miniaudio.h">
+      <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

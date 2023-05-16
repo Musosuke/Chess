@@ -1,20 +1,30 @@
-#pragma once
+﻿#pragma once
+#ifndef GAMEMANAGER_H
+#define GAMEMANAGER_H
+
+
+
 #include "Board.h"
 
-class GameManeger
+class GameManager
 {
 public:
-	GameManeger();
-	~GameManeger();
+	GameManager();
+	~GameManager();
+	int getTurn();
+	int isOver();
+	int showWinner();
+	void start();
+	void start(int);
+
+
 	vector<pair<int, int>> getMoveablelist(int y, int x);
 private:
 	Board* board;
+	int turn;
+	int winner;
+	bool _over;
 };
 
-GameManeger::GameManeger()
-{
-}
 
-GameManeger::~GameManeger()
-{
-}
+#endif // !GAMEMANAGER_H

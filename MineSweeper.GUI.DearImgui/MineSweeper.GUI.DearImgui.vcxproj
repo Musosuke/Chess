@@ -156,12 +156,16 @@
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Turn.cpp" />
+    <ClCompile Include="ViewManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Chess.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="miniaudio.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="Turn.h" />
+    <ClInclude Include="ViewManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

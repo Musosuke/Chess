@@ -1,12 +1,17 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
+#ifndef CHESS_H
+#define CHESS_H
+
+
+
 
 enum ChessType
 {
 	Pawn, Knight, Bishop, Rook, Queen, King
 };
 
-//¤W¶Â¤U¥Õ ¥Õ¤è¥ı¤â Color=«e¶i¤è¦V
+//ä¸Šé»‘ä¸‹ç™½ ç™½æ–¹å…ˆæ‰‹ Color=å‰é€²æ–¹å‘
 enum Color {
 	Black = 1, White = -1
 };
@@ -22,8 +27,12 @@ public:
 	pair<int, int> position;
 	vector<pair<int, int>>* Movelist;
 
-	Chess();
-	~Chess();
+	Chess() {
+
+	}
+	~Chess() {
+
+	}
 
 
 	void ClearMovelist();
@@ -33,4 +42,4 @@ public:
 private:
 
 };
-
+#endif // !CHESS_H

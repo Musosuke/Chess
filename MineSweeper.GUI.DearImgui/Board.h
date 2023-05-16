@@ -1,12 +1,20 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include "Chess.h"
+#ifndef BOARD_H
+#define BOARD_H
+
+#define BOARD_SIZE 8
 
 class Cell
 {
 public:
-	Cell();
-	~Cell();
+	Cell() {
+
+	}
+	~Cell() {
+
+	}
 	bool isEmpty;
 	Chess* chess;
 private:
@@ -17,14 +25,18 @@ private:
 class Board
 {
 public:
-	Board();
-	~Board();
+	Board() {
+
+	}
+	~Board() {
+
+	}
 	vector<pair<int, int>> getMoveablelist(int, int);
 
 private:
 	vector<Chess> w_chess;
 	vector<Chess> b_chess;
-	Cell cell[8][8];
+	Cell cell[BOARD_SIZE][BOARD_SIZE];
 
 	void Update();
 	void ScanStraight(Chess);
@@ -33,3 +45,4 @@ private:
 	bool TestRange(int, int);
 };
 
+#endif // !BOARD_H
