@@ -294,7 +294,7 @@ int main(void)
 					//Game.AIplace();
 				}
 				if (ImGui::Button("Pass")) {
-					//Game.nextTurn();
+					Game.nextTurn();
 				}
 				ImGui::SameLine();
 				if (ImGui::Button("Surrender")) {
@@ -303,9 +303,12 @@ int main(void)
 				ImGui::PushItemWidth(150);
 				ImGui::SliderFloat("BGM Volume", &device.masterVolumeFactor, 0.0f, 1.0f);
 
+				string tmp;
+				if (Game.isSelecting)
+					tmp = u8"isSelecting = true";
+				else
+					tmp = u8"isSelecting = false";
 
-
-				string tmp = u8"黑子數量: ";
 				ImGui::Text(tmp.c_str());
 				tmp = u8"白子數量: ";
 				ImGui::Text(tmp.c_str());
@@ -348,6 +351,24 @@ int main(void)
 						ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(space, 0));
 						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 
+						/*if (i % 3 == 0) {
+							if (ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0.89, 0.87, 0.61, 50))) {
+								Game.click(i, j);
+							}
+						}
+						else if (i % 3 == 1) {
+							if (ImGui::ImageButton((void*)(intptr_t)b_texture[0], ImVec2(button_size, button_size), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0.8, 0, 0, 50))) {
+								Game.click(i, j);
+							}
+						}
+						else if (i % 3 == 2) {
+							if (ImGui::ImageButton((void*)(intptr_t)w_texture[0], ImVec2(button_size, button_size), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0.72, 0.84, 1, 50))) {
+								Game.click(i, j);
+							}
+						}*/
+
+
+						//fixing
 						if (Game.isSelecting && Game.isMoveable(i, j)) {
 							if (Game.board->cell[i][j].isEmpty) {
 								if (ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0.5, 0.5, 0.5, 50))) {
@@ -381,6 +402,8 @@ int main(void)
 									Game.click(i, j);
 								}
 							}
+
+
 							//else if (Game.board->cell[i][j].canMove()) {
 							//	if (ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0.5, 0.5, 0.5, 50))) {
 							//		//Game.place(i, j);

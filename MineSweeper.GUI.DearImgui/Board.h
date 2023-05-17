@@ -42,6 +42,7 @@ public:
 	vector<pair<int, int>> getMoveablelist(int, int);
 	Cell cell[BOARD_SIZE][BOARD_SIZE];
 	void Update();
+	void MoveChess(int, int, int, int);
 private:
 	vector<Chess> w_chess;
 	vector<Chess> b_chess;
@@ -52,7 +53,6 @@ private:
 	void ScanEnPassant(Chess);
 	bool TestRange(int, int);
 
-	void MoveChess(int, int, int, int);
 
 	void ScanCastle(Chess);
 };

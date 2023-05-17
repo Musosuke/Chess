@@ -44,22 +44,24 @@ void GameManager::UpdateFrame() {
 }
 
 bool GameManager::click(int y, int x) {
+	if (board->cell[y][x].isEmpty) {
+		isSelecting = false;
+		return isSelecting;
+	}
 	if (board->cell[y][x].getColor() == turn) {
 		// when selecting, click cells that moveable can move chess, click other cell will stop selecting.
 		if (isSelecting) {
 			bool found = isMoveable(y, x);
 			if (found) {
-				//Move(selected_y,selected_x,y,x);
+				//board->MoveChess(selected_Y, selected_X, y, x);
 			}
 			isSelecting = false;
 		}
 		//when no selecting, click cells that is not Empty(has chess) can select the chess.
 		else {
-			if (!board->cell[y][x].isEmpty) {
-				selected_Y = y;
-				selected_X = x;
-				isSelecting = true;
-			}
+			selected_Y = y;
+			selected_X = x;
+			isSelecting = true;
 
 		}
 	}
@@ -67,6 +69,10 @@ bool GameManager::click(int y, int x) {
 		isSelecting = false;
 	}
 	return isSelecting;
+}
+
+void GameManager::nextTurn() {
+	turn = -turn;
 }
 
 vector<pair<int, int>> GameManager::getMoveablelist(int y, int x) {

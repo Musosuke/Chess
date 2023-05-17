@@ -23,6 +23,7 @@ public:
 	void start(int);
 	void UpdateFrame();
 	bool click(int, int);
+	void nextTurn();
 
 	vector<pair<int, int>> getMoveablelist(int y, int x);
 	bool isMoveable(int y, int x);
