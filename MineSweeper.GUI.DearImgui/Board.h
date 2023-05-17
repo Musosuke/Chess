@@ -49,8 +49,12 @@ private:
 	void ScanStraight(Chess);
 	void ScanIncline(Chess);
 	void ScanKnight(Chess);
+	void ScanEnPassant(Chess);
 	bool TestRange(int, int);
 
+	void MoveChess(int, int, int, int);
+
+	void ScanCastle(Chess);
 };
 
 #endif // !BOARD_H

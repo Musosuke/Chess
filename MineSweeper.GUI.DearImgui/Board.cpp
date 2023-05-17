@@ -12,6 +12,14 @@ void Board::Update() {
 		ScanStraight(w_chess[i]);
 		ScanIncline(w_chess[i]);
 		ScanKnight(w_chess[i]);
+		ScanEnPassant(w_chess[i]);
+	}
+	for (int i = 0; i < b_chess.size(); i++)
+	{
+		ScanStraight(b_chess[i]);
+		ScanIncline(b_chess[i]);
+		ScanKnight(b_chess[i]);
+		ScanEnPassant(b_chess[i]);
 	}
 }
 
@@ -184,6 +192,31 @@ void Board::ScanKnight(Chess c) {
 
 }
 
+void Board::ScanEnPassant(Chess c) {
+	
+	if (c.Type == ChessType::Pawn) {
+		
+		Cell leftChess = cell[c.position.first][c.position.second - 1];
+		Cell rightChess = cell[c.position.first][c.position.second + 1];
+		
+		if (!leftChess.isEmpty &&
+			leftChess.getColor() != c.color) 
+		{
+			int lefty = c.position.first;
+			int leftx = c.position.second - 1;
+			c.AddMovelist(lefty, leftx);
+		}
+		if (!rightChess.isEmpty &&
+			rightChess.getColor() != c.color)
+		{
+			int righty = c.position.first;
+			int rightx = c.position.second + 1;
+			c.AddMovelist(righty,rightx);
+		}
+	}
+}
+
+
 bool Board::TestRange(int y, int x) {
 	return (y < 8 && y >= 0 && x <= 8 && x >= 0);
 }
@@ -229,5 +262,76 @@ Board::Board()
 	cell[7][5] = Cell(ChessType::Bishop, playerColor);
 	cell[7][6] = Cell(ChessType::Knight, playerColor);
 	cell[7][7] = Cell(ChessType::Rook, playerColor);
+
+}
+
+
+void Board::MoveChess(int y1,int x1, int y2, int x2) {
+	if (cell[y1][x1].isEmpty) {
+		return;
+	}
+	auto moveableList = this->getMoveablelist(y1, x1);
+	if (cell[y1][x1].chess->FindMovelist(y2, x2)) {
+		//if y2x2 is moveable, and is a chess, need to remove this chess from Chess list
+		if (!cell[y2][x2].isEmpty) {
+			int colorofy2x2 = cell[y2][x2].getColor();
+			
+			if(colorofy2x2 == Color::Black){
+				//find chess and erase
+				for (int i = 0; i < b_chess.size(); ++i) {
+					if (b_chess[i].position.first == y2 && b_chess[i].position.second == x2) {
+						b_chess.erase(b_chess.begin() + i);
+						break;
+					}
+				}
+			}
+			else if (colorofy2x2 == Color::White) {
+				//find chess and erase
+				for (int i = 0; i < w_chess.size(); ++i) {
+					if (w_chess[i].position.first == y2 && w_chess[i].position.second == x2) {
+						w_chess.erase(w_chess.begin() + i);
+						break;
+					}
+				}
+			}
+		}
+		
+		//if need to append lost chess to some list, do it here
+		cell[y2][x2].chess = cell[y1][x1].chess;//this pos was replaced as the chess
+		cell[y1][x1] = Cell();//clear this cell into empty,without rule checking?
+
+		
+		
+		////enpassant and move forward
+		////if the chess is pawn, and move to left or right, then put pawn forward once if in range.
+		//if (cell[x2][y2].getType() == ChessType::Pawn) {
+		//	int movey = y2-y1;
+		//	int movex = x2-x1;
+		//	//if pawn go left or right
+		//	if (movey == 0 && (movex == 1 || movex == -1)) {
+		//		int theMovedChessColor = cell[y2][x2].getColor();
+		//		if (TestRange(y2 + theMovedChessColor, x2)) {
+		//			cell[y2 + theMovedChessColor][x2].chess = cell[y2][x2].chess;
+		//			cell[y2][x2] = Cell();
+		//		}
+		//	}
+		//}
+		
+		 
+		//do promotion
+		//changes type to Rook, Knight, Bishop, or Queen
+		if (cell[x2][y2].getType() == ChessType::Pawn) {
+		
+			if (cell[x2][y2].getColor() == Color::Black && y2 == 7){
+
+			}
+			else if (cell[x2][y2].getColor() == Color::White && y2 == 0) {
+			
+			}
+		}
+	}
+	else {
+		return;
+	}
 
 }

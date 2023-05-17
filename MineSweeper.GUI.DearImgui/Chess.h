@@ -45,6 +45,8 @@ public:
 	void AddMovelist(int, int);
 	bool FindMovelist(int, int);
 
+	void promotion();
+
 private:
 
 };
