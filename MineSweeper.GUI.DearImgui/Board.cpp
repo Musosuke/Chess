@@ -13,6 +13,12 @@ void Board::Update() {
 		ScanIncline(w_chess[i]);
 		ScanKnight(w_chess[i]);
 	}
+	for (int i = 0; i < b_chess.size(); i++)
+	{
+		ScanStraight(b_chess[i]);
+		ScanIncline(b_chess[i]);
+		ScanKnight(b_chess[i]);
+	}
 }
 
 void Board::ScanStraight(Chess c) {

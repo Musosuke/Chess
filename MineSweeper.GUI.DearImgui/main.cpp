@@ -348,25 +348,51 @@ int main(void)
 						ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(space, 0));
 						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 
-						if (Game.board->cell[i][j].isEmpty) {
-							ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size));
+						if (Game.isSelecting && Game.isMoveable(i, j)) {
+							if (Game.board->cell[i][j].isEmpty) {
+								if (ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0.5, 0.5, 0.5, 50))) {
+									Game.click(i, j);
+								}
+							}
+							else if (Game.board->cell[i][j].getColor() == Color::Black) {
+								if (ImGui::ImageButton((void*)(intptr_t)(b_texture[Game.board->cell[i][j].getType()]), ImVec2(button_size, button_size), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0.5, 0.5, 0.5, 50))) {
+									Game.click(i, j);
+								}
+							}
+							else if (Game.board->cell[i][j].getColor() == Color::White) {
+								if (ImGui::ImageButton((void*)(intptr_t)w_texture[Game.board->cell[i][j].getType()], ImVec2(button_size, button_size), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0.5, 0.5, 0.5, 50))) {
+									Game.click(i, j);
+								}
+							}
 						}
-						else if (Game.board->cell[i][j].getColor() == Color::Black)
-							ImGui::ImageButton((void*)(intptr_t)(b_texture[Game.board->cell[i][j].getType()]), ImVec2(button_size, button_size));
-						else if (Game.board->cell[i][j].getColor() == Color::White)
-							ImGui::ImageButton((void*)(intptr_t)w_texture[Game.board->cell[i][j].getType()], ImVec2(button_size, button_size));
-						//else if (Game.board->cell[i][j].canMove()) {
-						//	if (ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0.5, 0.5, 0.5, 50))) {
-						//		//Game.place(i, j);
-						//	}
-						//	if (ImGui::IsItemHovered()) {
-						//		//ImGui::SetTooltip("Flip count:%d", Game.showFlips(i, j));
-						//	}
-						//}
 						else {
-							ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size));
+							if (Game.board->cell[i][j].isEmpty) {
+								if (ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size))) {
+									Game.click(i, j);
+								}
+							}
+							else if (Game.board->cell[i][j].getColor() == Color::Black) {
+								if (ImGui::ImageButton((void*)(intptr_t)(b_texture[Game.board->cell[i][j].getType()]), ImVec2(button_size, button_size))) {
+									Game.click(i, j);
+								}
+							}
+							else if (Game.board->cell[i][j].getColor() == Color::White) {
+								if (ImGui::ImageButton((void*)(intptr_t)w_texture[Game.board->cell[i][j].getType()], ImVec2(button_size, button_size))) {
+									Game.click(i, j);
+								}
+							}
+							//else if (Game.board->cell[i][j].canMove()) {
+							//	if (ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0.5, 0.5, 0.5, 50))) {
+							//		//Game.place(i, j);
+							//	}
+							//	if (ImGui::IsItemHovered()) {
+							//		//ImGui::SetTooltip("Flip count:%d", Game.showFlips(i, j));
+							//	}
+							//}
+							/*else {
+								ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size));
+							}*/
 						}
-
 
 						/*else if (Game.board[i][j].color() == Color::EMPTY)
 							if (Game.board[i][j].canMove())

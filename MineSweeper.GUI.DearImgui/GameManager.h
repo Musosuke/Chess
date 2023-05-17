@@ -14,6 +14,7 @@ public:
 	GameManager();
 	~GameManager();
 	Board* board;
+	bool isSelecting;
 
 	int getTurn();
 	int isOver();
@@ -21,8 +22,10 @@ public:
 	void start();
 	void start(int);
 	void UpdateFrame();
+	bool click(int, int);
 
 	vector<pair<int, int>> getMoveablelist(int y, int x);
+	bool isMoveable(int y, int x);
 
 
 private:
@@ -30,6 +33,8 @@ private:
 	int turn;
 	int winner;
 	bool _over;
+
+	int selected_X, selected_Y;
 
 	Player player1;
 	Player player2;

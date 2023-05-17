@@ -9,7 +9,6 @@
 class ViewManager
 {
 public:
-
 	ViewManager();
 	~ViewManager();
 	int Init();
