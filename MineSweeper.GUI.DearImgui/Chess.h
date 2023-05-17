@@ -13,7 +13,7 @@ enum ChessType
 
 //上黑下白 白方先手 Color=前進方向
 enum Color {
-	Black = 1, White = -1
+	Black = 1, White = -1, Empty = 0
 };
 
 using namespace std;
@@ -30,7 +30,7 @@ public:
 	Chess() {
 
 	}
-	Chess(ChessType type,Color _color) {
+	Chess(ChessType type, Color _color) {
 		firstMove = true;
 		Type = static_cast<int>(type);
 		color = static_cast<int>(_color);

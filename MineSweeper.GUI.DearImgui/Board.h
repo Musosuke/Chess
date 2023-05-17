@@ -10,11 +10,11 @@ class Cell
 {
 public:
 	Cell() {
-
+		this->isEmpty = true;
 	}
-	Cell(ChessType type,Color _color) {
+	Cell(ChessType type, Color _color) {
 		this->chess = new Chess(type, _color);
-		
+		this->isEmpty = false;
 	}
 	~Cell() {
 
@@ -41,12 +41,11 @@ public:
 	}
 	vector<pair<int, int>> getMoveablelist(int, int);
 	Cell cell[BOARD_SIZE][BOARD_SIZE];
-
+	void Update();
 private:
 	vector<Chess> w_chess;
 	vector<Chess> b_chess;
 
-	void Update();
 	void ScanStraight(Chess);
 	void ScanIncline(Chess);
 	void ScanKnight(Chess);

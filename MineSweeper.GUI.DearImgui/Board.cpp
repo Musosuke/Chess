@@ -189,7 +189,7 @@ bool Board::TestRange(int y, int x) {
 }
 
 
-Board::Board() 
+Board::Board()
 {
 	/*
 		cell
@@ -200,8 +200,8 @@ Board::Board()
 			70 77
 	*/
 	Color playerColor;
-	
-	
+
+
 	playerColor = Color::Black;
 	cell[0][0] = Cell(ChessType::Rook, playerColor);
 	cell[0][1] = Cell(ChessType::Knight, playerColor);
@@ -211,7 +211,7 @@ Board::Board()
 	cell[0][5] = Cell(ChessType::Bishop, playerColor);
 	cell[0][6] = Cell(ChessType::Knight, playerColor);
 	cell[0][7] = Cell(ChessType::Rook, playerColor);
-	
+
 	for (int i = 0; i < 8; ++i) {
 		cell[1][i] = Cell(ChessType::Pawn, Color::Black);
 	}
@@ -229,5 +229,5 @@ Board::Board()
 	cell[7][5] = Cell(ChessType::Bishop, playerColor);
 	cell[7][6] = Cell(ChessType::Knight, playerColor);
 	cell[7][7] = Cell(ChessType::Rook, playerColor);
-	
+
 }

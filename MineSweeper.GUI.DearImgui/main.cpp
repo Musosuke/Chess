@@ -170,14 +170,14 @@ int main(void)
 
 	int my_image_width = 0;
 	int my_image_height = 0;
-	GLuint black_texture = 0, white_texture = 0, empty_texture = 0, bg_texture;
+	GLuint black_texture = 0, white_texture = 0, empty_texture = 0, bg_texture, test_texture;
 	GLuint w_texture[6]{ 0 };
 	GLuint b_texture[6]{ 0 };
 	for (int i = 0; i < 6; i++)
 	{
-		string tmp = "w" + FileName[i];
+		string tmp = "./Image/w" + FileName[i];
 		LoadTextureFromFile(tmp.c_str(), &w_texture[i], &my_image_width, &my_image_height);
-		tmp = "b" + FileName[i];
+		tmp = "./Image/b" + FileName[i];
 		LoadTextureFromFile(tmp.c_str(), &b_texture[i], &my_image_width, &my_image_height);
 	}
 	LoadTextureFromFile("./Image/black.png", &black_texture, &my_image_width, &my_image_height);
@@ -339,6 +339,7 @@ int main(void)
 				/*ImGui::SliderFloat("vertical", &dummy_size, 50.0f, 70.0f);
 				ImGui::SliderFloat("horizontal", &space, 0.0f, 10.0f);*/
 
+				//cout << Game.board->cell[0][0].getType();
 
 				//	BOARD
 				for (int i = 0; i < BOARD_SIZE; i++) {
@@ -347,11 +348,11 @@ int main(void)
 						ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(space, 0));
 						ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 
-						if (true)
+						if (Game.board->cell[i][j].isEmpty) {
 							ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size));
-
-						if (Game.board->cell[i][j].getColor() == Color::Black)
-							ImGui::ImageButton((void*)(intptr_t)b_texture[Game.board->cell[i][j].getType()], ImVec2(button_size, button_size));
+						}
+						else if (Game.board->cell[i][j].getColor() == Color::Black)
+							ImGui::ImageButton((void*)(intptr_t)(b_texture[Game.board->cell[i][j].getType()]), ImVec2(button_size, button_size));
 						else if (Game.board->cell[i][j].getColor() == Color::White)
 							ImGui::ImageButton((void*)(intptr_t)w_texture[Game.board->cell[i][j].getType()], ImVec2(button_size, button_size));
 						//else if (Game.board->cell[i][j].canMove()) {
@@ -379,7 +380,7 @@ int main(void)
 					}
 					ImGui::Dummy(ImVec2(1.0f, dummy_size));
 				}
-				Game.UpdateFrame();
+				//Game.UpdateFrame();
 			}
 			else {
 				ImGui::SetCursorPos(ImVec2(90, 30));
