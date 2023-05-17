@@ -155,6 +155,7 @@
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Turn.cpp" />
     <ClCompile Include="ViewManager.cpp" />
   </ItemGroup>
@@ -163,6 +164,7 @@
     <ClInclude Include="Chess.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="miniaudio.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Turn.h" />
     <ClInclude Include="ViewManager.h" />

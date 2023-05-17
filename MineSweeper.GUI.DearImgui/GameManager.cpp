@@ -3,6 +3,12 @@
 GameManager::GameManager()
 {
 	start();
+	player1 = Player(2400, Color::White);
+	player2 = Player(2400, Color::Black);
+	turn = 0;
+	_over = false;
+	winner = -1;
+	board = new Board();
 }
 
 GameManager::~GameManager()

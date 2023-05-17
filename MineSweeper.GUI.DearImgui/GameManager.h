@@ -5,6 +5,7 @@
 
 
 #include "Board.h"
+#include "Player.h"
 
 class GameManager
 {
@@ -24,6 +25,9 @@ private:
 	int turn;
 	int winner;
 	bool _over;
+
+	Player player1;
+	Player player2;
 };
 
 
