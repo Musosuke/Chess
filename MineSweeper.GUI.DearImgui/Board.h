@@ -15,6 +15,12 @@ public:
 	~Cell() {
 
 	}
+	int getType() {
+		return chess->Type;
+	}
+	int getColor() {
+		return chess->color;
+	}
 	bool isEmpty;
 	Chess* chess;
 private:
@@ -32,17 +38,18 @@ public:
 
 	}
 	vector<pair<int, int>> getMoveablelist(int, int);
+	Cell cell[BOARD_SIZE][BOARD_SIZE];
 
 private:
 	vector<Chess> w_chess;
 	vector<Chess> b_chess;
-	Cell cell[BOARD_SIZE][BOARD_SIZE];
 
 	void Update();
 	void ScanStraight(Chess);
 	void ScanIncline(Chess);
 	void ScanKnight(Chess);
 	bool TestRange(int, int);
+
 };
 
 #endif // !BOARD_H

@@ -1,8 +1,10 @@
-#include "Board.h"
+﻿#include "Board.h"
 
 vector<pair<int, int>> Board::getMoveablelist(int y, int x) {
 	return *cell[y][x].chess->Movelist;
 }
+
+
 
 void Board::Update() {
 	for (int i = 0; i < w_chess.size(); i++)
@@ -86,7 +88,7 @@ void Board::ScanIncline(Chess c) {
 			-0+0 ~-7+7
 			-0-0 ~-7-7
 		*/
-		for (int i = 0; i <= 7; ++i) 
+		for (int i = 0; i <= 7; ++i)
 		{
 			int y = c.position.first + i;
 			int x = c.position.second + i;
@@ -142,7 +144,7 @@ void Board::ScanIncline(Chess c) {
 			else
 				break;
 		}
-		
+
 	}
 	else
 		return;
@@ -166,16 +168,16 @@ void Board::ScanKnight(Chess c) {
 
 		if (TestRange(y + 1, x + 2))
 			c.AddMovelist(y + 1, x + 2);
-		
+
 		if (TestRange(y + 1, x - 2))
 			c.AddMovelist(y + 1, x - 2);
 
 		if (TestRange(y - 1, x + 2))
 			c.AddMovelist(y - 1, x + 2);
-		
+
 		if (TestRange(y - 1, x - 2))
 			c.AddMovelist(y - 1, x - 2);
-		
+
 	}
 	else
 		return;

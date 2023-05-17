@@ -1,16 +1,16 @@
 ﻿#include "imgui/imgui.h"
+#include <glad/glad.h>
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <string>
+
 #include "GameManager.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "stb_image.h"
-
 
 bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height)
 {
@@ -44,6 +44,8 @@ bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_wid
 	return true;
 }
 
+
+
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio.h"
 
@@ -59,6 +61,7 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
 
 	(void)pInput;
 }
+
 
 int main(void)
 {
@@ -159,15 +162,29 @@ int main(void)
 	bool show_Minesweeper_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+	string FileName[6]{ "_pawn_png_128px.png","_knight_png_128px.png" ,
+		"_bishop_png_128px.png" ,"_rook_png_128px.png" ,
+		"_queen_png_128px.png" ,"_king_png_128px.png" };
+
 	bool gameStart = false;
 
 	int my_image_width = 0;
 	int my_image_height = 0;
 	GLuint black_texture = 0, white_texture = 0, empty_texture = 0, bg_texture;
+	GLuint w_texture[6]{ 0 };
+	GLuint b_texture[6]{ 0 };
+	for (int i = 0; i < 6; i++)
+	{
+		string tmp = "w" + FileName[i];
+		LoadTextureFromFile(tmp.c_str(), &w_texture[i], &my_image_width, &my_image_height);
+		tmp = "b" + FileName[i];
+		LoadTextureFromFile(tmp.c_str(), &b_texture[i], &my_image_width, &my_image_height);
+	}
 	LoadTextureFromFile("./Image/black.png", &black_texture, &my_image_width, &my_image_height);
 	LoadTextureFromFile("./Image/white.png", &white_texture, &my_image_width, &my_image_height);
 	LoadTextureFromFile("./Image/empty.png", &empty_texture, &my_image_width, &my_image_height);
 	LoadTextureFromFile("./Image/bg.png", &bg_texture, &my_image_width, &my_image_height);
+
 	GameManager Game;
 	//Reversi Game;
 
@@ -192,29 +209,6 @@ int main(void)
 		// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 		if (show_demo_window)
 			ImGui::ShowDemoWindow(&show_demo_window);
-
-		// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
-		//{
-		//	static float f = 0.0f;
-		//	static int counter = 0;
-
-		//	ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-		//	ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-		//	ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-		//	ImGui::Checkbox("Another Window", &show_another_window);
-
-		//	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-		//	ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-		//	if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-		//		counter++;
-		//	ImGui::SameLine();
-		//	ImGui::Text("counter = %d", counter);
-
-		//	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-		//	ImGui::End();
-		//}
 
 		// 3. Show another simple window.
 		if (show_another_window)
@@ -356,11 +350,11 @@ int main(void)
 						if (true)
 							ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size));
 
-						//if (Game.board[i][j].color() == Color::Black)
-						//	ImGui::ImageButton((void*)(intptr_t)black_texture, ImVec2(button_size, button_size));
-						//else if (Game.board[i][j].color() == Color::White)
-						//	ImGui::ImageButton((void*)(intptr_t)white_texture, ImVec2(button_size, button_size));
-						//else if (Game.board[i][j].canMove()) {
+						if (Game.board->cell[i][j].getColor() == Color::Black)
+							ImGui::ImageButton((void*)(intptr_t)b_texture[Game.board->cell[i][j].getType()], ImVec2(button_size, button_size));
+						else if (Game.board->cell[i][j].getColor() == Color::White)
+							ImGui::ImageButton((void*)(intptr_t)w_texture[Game.board->cell[i][j].getType()], ImVec2(button_size, button_size));
+						//else if (Game.board->cell[i][j].canMove()) {
 						//	if (ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size), ImVec2(0, 0), ImVec2(1, 1), -1, ImVec4(0.5, 0.5, 0.5, 50))) {
 						//		//Game.place(i, j);
 						//	}
@@ -368,9 +362,9 @@ int main(void)
 						//		//ImGui::SetTooltip("Flip count:%d", Game.showFlips(i, j));
 						//	}
 						//}
-						//else {
-						//	ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size));
-						//}
+						else {
+							ImGui::ImageButton((void*)(intptr_t)empty_texture, ImVec2(button_size, button_size));
+						}
 
 
 						/*else if (Game.board[i][j].color() == Color::EMPTY)
@@ -385,6 +379,7 @@ int main(void)
 					}
 					ImGui::Dummy(ImVec2(1.0f, dummy_size));
 				}
+				Game.UpdateFrame();
 			}
 			else {
 				ImGui::SetCursorPos(ImVec2(90, 30));

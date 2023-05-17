@@ -30,6 +30,10 @@ void GameManager::start(int n) {
 	_over = false;
 }
 
+void GameManager::UpdateFrame() {
+	view.Update();
+}
+
 vector<pair<int, int>> GameManager::getMoveablelist(int y, int x) {
 	return board->getMoveablelist(y, x);
 }
