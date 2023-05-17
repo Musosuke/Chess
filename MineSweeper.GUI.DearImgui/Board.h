@@ -12,6 +12,10 @@ public:
 	Cell() {
 
 	}
+	Cell(ChessType type,Color _color) {
+		this->chess = new Chess(type, _color);
+		
+	}
 	~Cell() {
 
 	}
@@ -31,9 +35,7 @@ private:
 class Board
 {
 public:
-	Board() {
-
-	}
+	Board();
 	~Board() {
 
 	}

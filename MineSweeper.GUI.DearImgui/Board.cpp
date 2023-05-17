@@ -187,3 +187,47 @@ void Board::ScanKnight(Chess c) {
 bool Board::TestRange(int y, int x) {
 	return (y < 8 && y >= 0 && x <= 8 && x >= 0);
 }
+
+
+Board::Board() 
+{
+	/*
+		cell
+			00 07
+			10 17 V
+
+			60 67 V
+			70 77
+	*/
+	Color playerColor;
+	
+	
+	playerColor = Color::Black;
+	cell[0][0] = Cell(ChessType::Rook, playerColor);
+	cell[0][1] = Cell(ChessType::Knight, playerColor);
+	cell[0][2] = Cell(ChessType::Bishop, playerColor);
+	cell[0][3] = Cell(ChessType::Queen, playerColor);
+	cell[0][4] = Cell(ChessType::King, playerColor);
+	cell[0][5] = Cell(ChessType::Bishop, playerColor);
+	cell[0][6] = Cell(ChessType::Knight, playerColor);
+	cell[0][7] = Cell(ChessType::Rook, playerColor);
+	
+	for (int i = 0; i < 8; ++i) {
+		cell[1][i] = Cell(ChessType::Pawn, Color::Black);
+	}
+
+	for (int i = 0; i < 8; ++i) {
+		cell[6][i] = Cell(ChessType::Pawn, Color::White);
+	}
+
+	playerColor = Color::White;
+	cell[7][0] = Cell(ChessType::Rook, playerColor);
+	cell[7][1] = Cell(ChessType::Knight, playerColor);
+	cell[7][2] = Cell(ChessType::Bishop, playerColor);
+	cell[7][3] = Cell(ChessType::King, playerColor);
+	cell[7][4] = Cell(ChessType::Queen, playerColor);
+	cell[7][5] = Cell(ChessType::Bishop, playerColor);
+	cell[7][6] = Cell(ChessType::Knight, playerColor);
+	cell[7][7] = Cell(ChessType::Rook, playerColor);
+	
+}
