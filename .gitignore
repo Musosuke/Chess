@@ -31,3 +31,8 @@ MineSweeper.GUI.DearImgui/x64/Release/imgui.obj
 MineSweeper.GUI.DearImgui/x64/Release/glad.obj
 MineSweeper.GUI.DearImgui/x64/Release/GameManager.obj
 MineSweeper.GUI.DearImgui/x64/Release/Chess.obj
+*.obj
+*.iobj
+*.tlog
+*.recipe
+*.lastbuildstate
