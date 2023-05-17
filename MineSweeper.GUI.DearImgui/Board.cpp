@@ -79,7 +79,70 @@ void Board::ScanStraight(Chess c) {
 
 void Board::ScanIncline(Chess c) {
 	if (c.Type == Queen || c.Type == Bishop) {
-
+		/*
+		*   y,x
+			+0+0 ~+7+7
+			+0-0 ~+7-7
+			-0+0 ~-7+7
+			-0-0 ~-7-7
+		*/
+		for (int i = 0; i <= 7; ++i) 
+		{
+			int y = c.position.first + i;
+			int x = c.position.second + i;
+			if (TestRange(y, x))
+			{
+				c.AddMovelist(y, x);
+				if (!cell[y][x].isEmpty) {
+					break;
+				}
+			}
+			else
+				break;
+		}
+		for (int i = 0; i <= 7; ++i)
+		{
+			int y = c.position.first + i;
+			int x = c.position.second - i;
+			if (TestRange(y, x))
+			{
+				c.AddMovelist(y, x);
+				if (!cell[y][x].isEmpty) {
+					break;
+				}
+			}
+			else
+				break;
+		}
+		for (int i = 0; i <= 7; ++i)
+		{
+			int y = c.position.first - i;
+			int x = c.position.second + i;
+			if (TestRange(y, x))
+			{
+				c.AddMovelist(y, x);
+				if (!cell[y][x].isEmpty) {
+					break;
+				}
+			}
+			else
+				break;
+		}
+		for (int i = 0; i <= 7; ++i)
+		{
+			int y = c.position.first - i;
+			int x = c.position.second - i;
+			if (TestRange(y, x))
+			{
+				c.AddMovelist(y, x);
+				if (!cell[y][x].isEmpty) {
+					break;
+				}
+			}
+			else
+				break;
+		}
+		
 	}
 	else
 		return;
@@ -87,7 +150,32 @@ void Board::ScanIncline(Chess c) {
 
 void Board::ScanKnight(Chess c) {
 	if (c.Type == Knight) {
+		int y = c.position.first;
+		int x = c.position.second;
+		if (TestRange(y + 2, x + 1))
+			c.AddMovelist(y + 2, x + 1);
 
+		if (TestRange(y + 2, x - 1))
+			c.AddMovelist(y + 2, x - 1);
+
+		if (TestRange(y - 2, x + 1))
+			c.AddMovelist(y - 2, x + 1);
+
+		if (TestRange(y - 2, x - 1))
+			c.AddMovelist(y - 2, x - 1);
+
+		if (TestRange(y + 1, x + 2))
+			c.AddMovelist(y + 1, x + 2);
+		
+		if (TestRange(y + 1, x - 2))
+			c.AddMovelist(y + 1, x - 2);
+
+		if (TestRange(y - 1, x + 2))
+			c.AddMovelist(y - 1, x + 2);
+		
+		if (TestRange(y - 1, x - 2))
+			c.AddMovelist(y - 1, x - 2);
+		
 	}
 	else
 		return;
