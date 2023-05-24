@@ -50,6 +50,9 @@ public:
 	Chess* chessPro;
 	void PromoType(int);
 
+	bool canCastling;
+	void Castling(int, int, int, int);
+
 	void Update();
 	void MoveChess(int, int, int, int);
 private:
@@ -63,7 +66,7 @@ private:
 	bool TestRange(int, int);
 
 
-	void ScanCastle(Chess);
+	void ScanCastle(Chess*);
 };
 
 #endif // !BOARD_H

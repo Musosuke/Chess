@@ -14,6 +14,7 @@ void Board::Update() {
 		ScanIncline(w_chess[i]);
 		ScanKnight(w_chess[i]);
 		//ScanEnPassant(w_chess[i]);
+		ScanCastle(w_chess[i]);
 	}
 	for (int i = 0; i < b_chess.size(); i++)
 	{
@@ -22,6 +23,7 @@ void Board::Update() {
 		ScanIncline(b_chess[i]);
 		ScanKnight(b_chess[i]);
 		//ScanEnPassant(b_chess[i]);
+		ScanCastle(b_chess[i]);
 	}
 }
 
@@ -331,6 +333,32 @@ void Board::ScanEnPassant(Chess* c) {
 	}
 }
 
+void Board::ScanCastle(Chess* c) {
+	if (c->Type == ChessType::King) {
+		for (int dir = -1; dir < 2; dir += 2) {
+			for (int shift = 1; shift < 8; shift++) {
+				//X dir
+				int y = c->position.first;
+				int x = c->position.second + dir * shift;
+				if (TestRange(y, x))
+				{
+					if (cell[y][x].getColor() == c->color && cell[y][x].getType() == ChessType::Rook) {
+						if (cell[y][x].chess->firstMove && c->firstMove) {
+							canCastling = true;
+							c->AddMovelist(y, c->position.second + dir * 2);
+						}
+						break;
+					}
+					if (!cell[y][x].isEmpty) {
+						break;
+					}
+				}
+				else
+					break;
+			}
+		}
+	}
+}
 
 bool Board::TestRange(int y, int x) {
 	return (y < 8 && y >= 0 && x < 8 && x >= 0);
@@ -350,6 +378,8 @@ Board::Board()
 	Color playerColor;
 	promotion = false;
 	chessPro = NULL;
+
+	canCastling = true;
 
 	playerColor = Color::Black;
 	cell[0][0] = Cell(ChessType::Rook, playerColor, make_pair(0, 0));
@@ -393,6 +423,44 @@ Board::Board()
 void Board::MoveChess(int y1, int x1, int y2, int x2) {
 	if (cell[y1][x1].isEmpty) {
 		return;
+	}
+	if (canCastling) {
+		cell[y1][x1].getType() == ChessType::King;
+		//C  K
+		if (x1 == x2 + 2) {
+			for (int i = 0; i < 8; i++) {
+				if (cell[y1][i].getType() == ChessType::Rook) {
+					break;
+				}
+				cell[y1][x2 + 1].chess = cell[y1][i].chess;
+				cell[y1][x2 + 1].isEmpty = false;
+				cell[y1][x2 + 1].chess->firstMove = false;
+				cell[y1][x2 + 1].chess->position = make_pair(y1, x2 + 1);
+				cell[y1][i] = Cell();
+			}
+			cell[y2][x2].chess = cell[y1][x1].chess;//this pos was replaced as the chess
+			cell[y2][x2].isEmpty = false;
+			cell[y2][x2].chess->firstMove = false;
+			cell[y2][x2].chess->position = make_pair(y2, x2);
+
+		}
+		//K  C
+		else if (x1 == x2 - 2) {
+			for (int i = 7; i > 0; i--) {
+				if (cell[y1][i].getType() == ChessType::Rook) {
+					break;
+				}
+				cell[y1][x2 - 1].chess = cell[y1][i].chess;
+				cell[y1][x2 - 1].isEmpty = false;
+				cell[y1][x2 - 1].chess->firstMove = false;
+				cell[y1][x2 - 1].chess->position = make_pair(y1, x2 - 1);
+				cell[y1][i] = Cell();
+			}
+			cell[y2][x2].chess = cell[y1][x1].chess;//this pos was replaced as the chess
+			cell[y2][x2].isEmpty = false;
+			cell[y2][x2].chess->firstMove = false;
+			cell[y2][x2].chess->position = make_pair(y2, x2);
+		}
 	}
 	auto moveableList = this->getMoveablelist(y1, x1);
 	if (cell[y1][x1].chess->FindMovelist(y2, x2)) {
