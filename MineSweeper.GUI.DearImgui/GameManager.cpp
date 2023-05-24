@@ -9,8 +9,8 @@ GameManager::GameManager()
 	_over = false;
 	isSelecting = false;
 	winner = -1;
-	selected_X = 0;
-	selected_Y = 0;
+	selected_X = 9;
+	selected_Y = 9;
 	board = new Board();
 }
 
@@ -44,35 +44,53 @@ void GameManager::UpdateFrame() {
 }
 
 bool GameManager::click(int y, int x) {
-	if (board->cell[y][x].isEmpty) {
-		isSelecting = false;
-		return isSelecting;
-	}
-	if (board->cell[y][x].getColor() == turn) {
+
+	//when selecting, select the target cell that the chess should move to.
+	//if target cell is not moveable or moved, cancel selecting
+	if (isSelecting) {
 		// when selecting, click cells that moveable can move chess, click other cell will stop selecting.
-		if (isSelecting) {
-			bool found = isMoveable(y, x);
-			if (found) {
-				//board->MoveChess(selected_Y, selected_X, y, x);
+		bool found = isMoveable(y, x);
+		if (found) {
+			board->MoveChess(selected_Y, selected_X, y, x);
+			if (board->promotion) {
+
 			}
-			isSelecting = false;
+			board->Update();
+			nextTurn();
 		}
-		//when no selecting, click cells that is not Empty(has chess) can select the chess.
-		else {
+		selected_X = 9;
+		selected_Y = 9;
+		isSelecting = false;
+	}
+	//when not selecting, select the target chess to move
+	else {
+		//don't select empty cell, there is not chess
+		if (board->cell[y][x].isEmpty) {
+			isSelecting = false;
+			return isSelecting;
+		}
+
+		//only select chesses that conform with turn
+		if (board->cell[y][x].getColor() == turn) {
 			selected_Y = y;
 			selected_X = x;
 			isSelecting = true;
-
 		}
-	}
-	else {
-		isSelecting = false;
+
 	}
 	return isSelecting;
 }
 
 void GameManager::nextTurn() {
+	if (_over) return;
 	turn = -turn;
+}
+
+int GameManager::gameover(int p) {
+	if (_over) return winner;
+	winner = p;
+	_over = true;
+	return winner;
 }
 
 vector<pair<int, int>> GameManager::getMoveablelist(int y, int x) {
@@ -80,7 +98,11 @@ vector<pair<int, int>> GameManager::getMoveablelist(int y, int x) {
 }
 
 bool GameManager::isMoveable(int y, int x) {
-	vector<pair<int, int>> list = getMoveablelist(selected_Y, selected_X);
+	if (selected_Y > 7 || selected_X > 7) {
+		return false;
+	}
+	//vector<pair<int, int>> list = getMoveablelist(selected_Y, selected_X);
+	vector<pair<int, int>> list = board->getMoveablelist(selected_Y, selected_X);
 	bool found = false;
 	for (int i = 0; i < list.size(); i++) {
 		if (y == list[i].first && x == list[i].second) {
@@ -89,4 +111,11 @@ bool GameManager::isMoveable(int y, int x) {
 		}
 	}
 	return found;
+}
+
+bool GameManager::isPromotion() {
+	return board->promotion;
+}
+void GameManager::selectedType(int t) {
+	board->PromoType(t);
 }

@@ -30,10 +30,11 @@ public:
 	Chess() {
 
 	}
-	Chess(ChessType type, Color _color) {
+	Chess(ChessType type, Color _color, pair<int, int> pos) {
 		firstMove = true;
 		Type = static_cast<int>(type);
 		color = static_cast<int>(_color);
+		position = pos;
 		Movelist = new vector<pair<int, int>>();
 	}
 	~Chess() {

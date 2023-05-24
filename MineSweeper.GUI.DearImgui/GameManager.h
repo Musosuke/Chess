@@ -24,6 +24,9 @@ public:
 	void UpdateFrame();
 	bool click(int, int);
 	void nextTurn();
+	int gameover(int);
+	bool isPromotion();
+	void selectedType(int);
 
 	vector<pair<int, int>> getMoveablelist(int y, int x);
 	bool isMoveable(int y, int x);
@@ -34,6 +37,7 @@ private:
 	int turn;
 	int winner;
 	bool _over;
+	bool promotion;
 
 	int selected_X, selected_Y;
 

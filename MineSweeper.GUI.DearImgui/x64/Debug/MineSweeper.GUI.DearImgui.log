@@ -1,0 +1,21 @@
+﻿  Board.cpp
+  Chess.cpp
+  GameManager.cpp
+D:\Coding\C++\Chess\MineSweeper.GUI.DearImgui\ViewManager.h(21,19): warning C4305: '正在初始化': 從 'double' 轉換為 'float'，是由較大的類型轉換為較小的類型，可能導致資料遺失
+D:\Coding\C++\Chess\MineSweeper.GUI.DearImgui\ViewManager.h(22,14): warning C4305: '正在初始化': 從 'double' 轉換為 'float'，是由較大的類型轉換為較小的類型，可能導致資料遺失
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_glfw.cpp
+D:\Coding\C++\Chess\MineSweeper.GUI.DearImgui\imgui\imgui_impl_glfw.cpp(76,10): fatal error C1083: 無法開啟包含檔案: 'GLFW/glfw3.h': No such file or directory
+  imgui_impl_opengl3.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  main.cpp
+D:\Coding\C++\Chess\MineSweeper.GUI.DearImgui\main.cpp(2,10): fatal error C1083: 無法開啟包含檔案: 'glad/glad.h': No such file or directory
+  Player.cpp
+  Turn.cpp
+  ViewManager.cpp
+D:\Coding\C++\Chess\MineSweeper.GUI.DearImgui\ViewManager.h(21,19): warning C4305: '正在初始化': 從 'double' 轉換為 'float'，是由較大的類型轉換為較小的類型，可能導致資料遺失
+D:\Coding\C++\Chess\MineSweeper.GUI.DearImgui\ViewManager.h(22,14): warning C4305: '正在初始化': 從 'double' 轉換為 'float'，是由較大的類型轉換為較小的類型，可能導致資料遺失
+  正在產生程式碼...

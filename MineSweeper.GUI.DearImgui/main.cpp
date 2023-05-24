@@ -290,15 +290,15 @@ int main(void)
 					gameStart = !gameStart;
 				}
 				ImGui::SameLine();
-				if (ImGui::Button(u8"最多翻棋")) {
-					//Game.AIplace();
+				if (ImGui::Button(u8"和棋")) {
+					Game.gameover(0);
 				}
 				if (ImGui::Button("Pass")) {
 					Game.nextTurn();
 				}
 				ImGui::SameLine();
 				if (ImGui::Button("Surrender")) {
-					//Game.gameover(-Game.getTurn());
+					Game.gameover(-Game.getTurn());
 				}
 				ImGui::PushItemWidth(150);
 				ImGui::SliderFloat("BGM Volume", &device.masterVolumeFactor, 0.0f, 1.0f);
@@ -310,9 +310,19 @@ int main(void)
 					tmp = u8"isSelecting = false";
 
 				ImGui::Text(tmp.c_str());
-				tmp = u8"白子數量: ";
+
+				if (Game.board->cell[2][5].isEmpty) {
+					tmp = u8"2,5 Moveable = true";
+				}
+				else
+					tmp = u8"5,0 Moveable = false";
+
 				ImGui::Text(tmp.c_str());
 				ImGui::NewLine();
+
+				/*for (int i = 0; i < Game.getMoveablelist(6, 0).size(); i++) {
+					cout << Game.getMoveablelist(6, 0)[i].first << ", " << Game.getMoveablelist(6, 0)[i].second << '\n';
+				}*/
 
 				if (Game.isOver()) {
 					string win;
@@ -321,14 +331,18 @@ int main(void)
 					switch (Game.showWinner())
 					{
 					case Color::Black:
-						win += u8"黑子獲勝!!!";
+						win += u8"黑棋獲勝!!!";
 						tex = black_texture;
 						break;
 					case Color::White:
-						win += u8"白子獲勝!!!";
+						win += u8"白棋獲勝!!!";
 						tex = white_texture;
 						break;
+					case Color::Empty:
+						win += u8"和局";
+						tex = empty_texture;
 					}
+					ImGui::SetNextWindowPos(ImVec2(460, 20), 0, ImVec2(0, 0));
 					ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.5f, 0.5f, 0.5f, 0.5f));
 					ImGui::Begin("Winner", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove |
 						ImGuiWindowFlags_NoCollapse);
@@ -338,12 +352,39 @@ int main(void)
 					ImGui::End();
 				}
 
+				if (Game.isPromotion()) {
+					ImGui::SetNextWindowPos(ImVec2(280, 30), 0, ImVec2(0, 0));
+					ImGui::SetNextWindowSize(ImVec2(250, 80));
+					ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.5f, 0.5f, 0.5f, 0.5f));
+					ImGui::Begin("Select Promotion Type", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoMove |
+						ImGuiWindowFlags_NoCollapse);
+					ImGui::PopStyleColor();
+					ImGui::SameLine();
+					if (ImGui::ImageButton((void*)(intptr_t)(b_texture[1]), ImVec2(button_size, button_size))) {
+						Game.selectedType(1);
+					}
+					ImGui::SameLine();
+					if (ImGui::ImageButton((void*)(intptr_t)(b_texture[2]), ImVec2(button_size, button_size))) {
+						Game.selectedType(2);
+					}
+					ImGui::SameLine();
+					if (ImGui::ImageButton((void*)(intptr_t)(b_texture[3]), ImVec2(button_size, button_size))) {
+						Game.selectedType(3);
+					}
+					ImGui::SameLine();
+					if (ImGui::ImageButton((void*)(intptr_t)(b_texture[4]), ImVec2(button_size, button_size))) {
+						Game.selectedType(4);
+					}
+					ImGui::End();
+				}
+
 
 				/*ImGui::SliderFloat("vertical", &dummy_size, 50.0f, 70.0f);
 				ImGui::SliderFloat("horizontal", &space, 0.0f, 10.0f);*/
 
 				//cout << Game.board->cell[0][0].getType();
 
+				ImGui::SetCursorPos(ImVec2(0, 125));
 				//	BOARD
 				for (int i = 0; i < BOARD_SIZE; i++) {
 					for (int j = 0; j < BOARD_SIZE; j++) {
@@ -438,12 +479,12 @@ int main(void)
 					gameStart = !gameStart;
 				}
 				ImGui::SameLine();
-				if (ImGui::Button(u8"AI黑子", ImVec2(100, 50))) {
+				if (ImGui::Button(u8"黑子先行", ImVec2(100, 50))) {
 					Game.start(Color::Black);
 					gameStart = !gameStart;
 				}
 				ImGui::SameLine();
-				if (ImGui::Button(u8"AI白子", ImVec2(100, 50))) {
+				if (ImGui::Button(u8"白子先行", ImVec2(100, 50))) {
 					Game.start(Color::White);
 					gameStart = !gameStart;
 				}
